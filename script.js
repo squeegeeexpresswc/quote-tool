@@ -183,7 +183,7 @@ function printQuote() {
   emailBody += `Name: ${customer.firstName} ${customer.lastName}\n`;
   emailBody += `Phone: ${customer.phone}\n`;
   emailBody += `Email: ${customer.email}\n`;
-  emailBody += `Address: ${customer.address}\n${customer.city}, ${customer.state} ${customer.zip}`;
+  emailBody += `Address: ${customer.address}\n${customer.city}, ${customer.state} ${customer.zip}\n`;
   
   // Services included based on user selection
   emailBody += `Services Included:\n\n`;
