@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window Cleaning Quote Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Window Cleaning Quote Tool</h1>
+
+<div class="container">
+    <div class="form-section">
+
+        <div class="section">
+            <h2>Customer Information</h2>
+            <div class="input-pair">
+              <div>
+                  <label>First Name</label>
+                  <input type="text" id="customerFirstName">
+              </div>
+              <div>
+                  <label>Last Name</label>
+                  <input type="text" id="customerLastName">
+              </div>
+          </div>
+            <div class="input-pair">
+                <div>
+                    <label>Phone Number</label>
+                    <input type="text" id="customerPhone">
+                </div>
+                <div>
+                  <label>Email</label>
+                  <input type="email" id="customerEmail">
+              </div>
+            </div>
+            <div>
+                <label>Street Address</label>
+                <input type="text" id="customerStreet">
+            </div>
+            <div class="input-pair">
+              <div class="input-city">
+                <label>City</label>
+                <input type="text" id="customerCity">
+              </div>
+              <div class="input-state">
+                <label>State</label>
+                <input type="text" id="customerState">
+              </div>
+              <div class="input-zip">
+                <label>Zip Code</label>
+                <input type="text" id="customerZip">
+              </div>
+            </div>
+            
+        </div>
+
+        <div class="section">
+            <h2>Set Default Prices</h2>
+            <label>Price per Pane ($)</label>
+            <input type="number" id="pricePerPane" value="7.50" step="0.01">
+
+            <label>Price per French Pane ($)</label>
+            <input type="number" id="pricePerFrenchPane" value="2.00" step="0.01">
+
+            <label>Price per Screen ($)</label>
+            <input type="number" id="pricePerScreen" value="5.00" step="0.01">
+
+            <label>Price per Track ($)</label>
+            <input type="number" id="pricePerTrack" value="3.00" step="0.01">
+
+            <div class="input-pair">
+                <div>
+                    <label>Second Floor Adjustment Type</label>
+                    <select id="secondFloorAdjustmentType">
+                        <option value="fixed">Fixed Amount ($)</option>
+                        <option value="percent">Percentage (%)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Adjustment Value</label>
+                    <input type="number" id="secondFloorAdjustmentValue" value="5" step="0.01">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>First Floor Windows</h2>
+            <label>Single Pane Windows (1st Floor) – <span id="singlePanePriceLabel"></span></label>
+            <input type="number" id="firstFloorSinglePanes" value="0">
+
+            <label>Double Pane Windows (1st Floor) – <span id="doublePanePriceLabel"></span></label>
+            <input type="number" id="firstFloorDoublePanes" value="0">
+
+            <div class="french-group">
+                <div>
+                    <label>French Pane Windows (1st Floor) – <span id="frenchPanePriceLabel"></span></label>
+                    <input type="number" id="firstFloorFrenchPanes" value="0">
+                </div>
+                <div>
+                    <label>French Panes per Window (1st Floor)</label>
+                    <input type="number" id="frenchPanesPerWindow" value="9">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Second Floor and Above Windows</h2>
+            <label>Single Pane Windows (2nd Floor+) – <span id="secondFloorSinglePanePriceLabel"></span></label>
+            <input type="number" id="secondFloorSinglePanes" value="0">
+
+            <label>Double Pane Windows (2nd Floor+) – <span id="secondFloorDoublePanePriceLabel"></span></label>
+            <input type="number" id="secondFloorDoublePanes" value="0">
+
+            <div class="french-group">
+                <div>
+                    <label>French Pane Windows (2nd Floor+) – <span id="secondFloorFrenchPanePriceLabel"></span></label>
+                    <input type="number" id="secondFloorFrenchPanes" value="0">
+                </div>
+                <div>
+                    <label>French Panes per Window (2nd Floor+)</label>
+                    <input type="number" id="secondFloorFrenchPanesPerWindow" value="9">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Screens and Tracks</h2>
+            <label>Total Screens – <span id="screenPriceLabel"></span></label>
+            <input type="number" id="totalScreens" value="0">
+
+            <label>Total Tracks – <span id="trackPriceLabel"></span></label>
+            <input type="number" id="totalTracks" value="0">
+        </div>
+
+        <div class="section">
+            <h2>Cleaning Type</h2>
+            <label>Cleaning Type</label>
+            <select id="cleanType">
+                <option value="exterior">Exterior Only</option>
+                <option value="interior">Interior Only</option>
+                <option value="both">Interior & Exterior</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <h2>Discount</h2>
+            <div class="input-pair">
+                <div>
+                    <label>Discount Type</label>
+                    <select id="discountType">
+                        <option value="none">None</option>
+                        <option value="amount">Amount ($)</option>
+                        <option value="percent">Percentage (%)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Discount Value</label>
+                    <input type="number" id="discountValue" value="0" step="0.01">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quote-summary">
+        <div id="results">
+            <!-- Quote Summary dynamically inserted here -->
+        </div>
+
+        <div class="quote-actions">
+            <button onclick="printQuote()">Print Quote</button>
+            <button onclick="emailQuote()">Email Quote</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
