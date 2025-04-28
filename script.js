@@ -6,6 +6,9 @@ function getCustomerInfo() {
     firstName: document.getElementById('customerFirstName').value || '',
     lastName: document.getElementById('customerLastName').value || '',
     address: document.getElementById('customerStreet').value || '',
+    city: document.getElementById('customerCity').value || '',
+    state: document.getElementById('customerState').value || '',
+    zip: document.getElementById('customerZip').value || '',
     email: document.getElementById('customerEmail').value || '',
     phone: document.getElementById('customerPhone').value || ''
   };
@@ -174,41 +177,51 @@ function printQuote() {
   const simpleQuote = generateSimpleQuote();
   const customer = getCustomerInfo();
 
-  const printWindow = window.open('', '', 'height=800,width=600');
-  printWindow.document.write('<html><head><title>Window Cleaning Quote</title>');
-  printWindow.document.write('<style>\n' + 'body { font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background: #f8f9fb; }\n' + 'h1 { color: #0a2a56; font-size: 28px; margin-bottom: 20px; }\n' + 'p { font-size: 18px; margin: 8px 0; color: #475569; }\n' + 'strong { color: #0a2a56; font-size: 24px; }\n' + 'hr { margin: 20px 0; border: none; height: 1px; background: #cbd5e1; }\n' + '</style>');
-  printWindow.document.write('</head><body>');
-  printWindow.document.write('<h1>Squeegee Express Window Cleaning</h1>');
-  printWindow.document.write('<p><em>Professional Window Cleaning Quote</em></p>');
-  printWindow.document.write('<hr>');
+  // Start with the email body template
+  let emailBody = `Below is the quote for ${customer.firstName} ${customer.lastName}\n\n`;
+  
+  emailBody += `Name: ${customer.firstName} ${customer.lastName}\n`;
+  emailBody += `Phone: ${customer.phone}\n`;
+  emailBody += `Email: ${customer.email}\n`;
+  emailBody += `Address: ${customer.address}\n${customer.city}, ${customer.state} ${customer.zip}`;
+  
+  // Services included based on user selection
+  emailBody += `Services Included:\n\n`;
 
-  // Print customer info if provided
-  if (customer.firstName || customer.lastName || customer.address || customer.email || customer.phone) {
-    printWindow.document.write('<p><strong>Customer Information:</strong></p>');
-    if (customer.firstName || customer.lastName) {
-      printWindow.document.write(`<p>Name: ${customer.firstName} ${customer.lastName}</p>`);
-    }
-    if (customer.address) printWindow.document.write(`<p>Address: ${customer.address}</p>`);
-    if (customer.email) printWindow.document.write(`<p>Email: ${customer.email}</p>`);
-    if (customer.phone) printWindow.document.write(`<p>Phone: ${customer.phone}</p>`);
-    printWindow.document.write('<hr>');
+  // Check and include the selected services
+  if (document.getElementById('cleanType').value === 'interior' || document.getElementById('cleanType').value === 'both') {
+    emailBody += `- Interior window cleaning\n`;
   }
 
-  simpleQuote.split('\n').forEach(line => {
-    if (line.trim() !== '') {
-      if (line.includes('Total:')) {
-        printWindow.document.write(`<p><strong>${line}</strong></p>`);
-      } else {
-        printWindow.document.write(`<p>${line}</p>`);
-      }
-    }
-  });
+  if (document.getElementById('cleanType').value === 'exterior' || document.getElementById('cleanType').value === 'both') {
+    emailBody += `- Exterior window cleaning\n`;
+  }
 
-  printWindow.document.write('</body></html>');
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
+  // Check if screen cleaning is selected
+  const totalScreens = parseInt(document.getElementById('totalScreens').value) || 0;
+  if (totalScreens > 0) {
+    emailBody += `- Screen cleaning\n`;
+  }
+
+  // Check if track cleaning is selected
+  const totalTracks = parseInt(document.getElementById('totalTracks').value) || 0;
+  if (totalTracks > 0) {
+    emailBody += `- Track cleaning\n`;
+  }
+
+  // Add the subtotal, discount, and total
+  emailBody += `\n${simpleQuote}\n\n`;
+
+  // Add the call to action for scheduling
+  emailBody += `Quote valid for 30 days from the date of this email.`;
+
+  const today = new Date();
+  const currentDate = today.toLocaleDateString();
+  const subject = encodeURIComponent(`Quote: ${currentDate} ${customer.firstName} ${customer.lastName}`);
+  const body = encodeURIComponent(emailBody);
+
+  // Use the customer's email in the "To" field
+  window.location.href = `mailto:${'alex@squeegeeexpress.com'}?subject=${subject}&body=${body}`;
 }
 
 // Function to email the quote with the specified template
